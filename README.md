@@ -49,7 +49,26 @@ Gestión de Empleados es una aplicación web desarrollada en Django que permite 
 
 ## Estructura del Proyecto
 
-Company/ init.py asgi.py settings.py urls.py wsgi.py db.sqlite3 manage.py management/ init.py admin.py apps.py migrations/ init.py 0001_initial.py ... models.py tests.py views.py templates/ company-verEspañol.html management/ add_employee.html add_leave.html add_shift.html employee_list.html leave_list.html report.html shift_list.html README.md
+Company
+└── manage.py
+└── README.md
+└── Company\asgi.py
+└── Company\settings.py
+└── Company\urls.py
+└── Company\wsgi.py
+└── Company\__init__.py
+└── management\admin.py
+└── management\apps.py
+└── management\models.py
+└── management\tests.py
+└── management\views.py
+└── management\__init__.py
+└── management\migrations\0001_initial.py
+└── management\migrations\0002_rename_start_date_leave_date_remove_leave_leave_type_and_more.py
+└── management\migrations\0003_rename_reason_leave_actions_and_more.py
+└── management\migrations\0004_remove_shift_actions_alter_leave_actions.py
+└── management\migrations\0005_remove_leave_end_time_remove_leave_start_time.py
+└── management\migrations\__init__.py
 
 
 ## Contribuciones
