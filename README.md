@@ -19,28 +19,12 @@ Gestión de Empleados es una aplicación web desarrollada en Django que permite 
     cd gestion-de-empleados
     ```
 
-2. Crea y activa un entorno virtual:
-    ```sh
-    python -m venv env
-    source env/bin/activate  # En Windows usa `env\Scripts\activate`
-    ```
-
-3. Instala las dependencias:
-    ```sh
-    pip install -r requirements.txt
-    ```
-
-4. Realiza las migraciones de la base de datos:
-    ```sh
-    python manage.py migrate
-    ```
-
-5. Inicia el servidor de desarrollo:
+2. Inicia el servidor de desarrollo:
     ```sh
     python manage.py runserver
     ```
 
-6. Abre tu navegador y ve a [http://127.0.0.1:8000/](http://_vscodecontentref_/0) para ver la aplicación en funcionamiento.
+3. Abre tu navegador y ve a [http://127.0.0.1:8000/](http://127.0.0.1:8000/) para ver la aplicación en funcionamiento.
 
 ## Uso
 
