@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Reporte</title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f9;
+            }
+            header {
+                background-color: #007bff;
+                color: white;
+                padding: 15px;
+                text-align: center;
+            }
+            h1 {
+                margin: 0;
+            }
+            .container {
+                width: 90%;
+                max-width: 800px;
+                margin: 20px auto;
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+            }
+            canvas {
+                max-width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>Reporte</h1>
+        </header>
+        <div class="container">
+            <canvas id="reportChart"></canvas>
+        </div>
+
+        <script>
+            // Datos enviados desde Django (contexto)
+            const data = JSON.parse('{{ data|safe }}');
+
+            // Configuración del gráfico
+            const ctx = document.getElementById('reportChart').getContext('2d');
+            const reportChart = new Chart(ctx, {
+                type: 'bar', // Puedes cambiar a "line", "pie", etc.
+                data: {
+                    labels: data.labels, // Nombres de los empleados
+                    datasets: [{
+                        label: 'Duración de Turnos (Horas)', // Nombre del dataset
+                        data: data.dataset, // Datos procesados
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Horas',
+                            },
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Empleados',
+                            },
+                        },
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                        },
+                    },
+                },
+            });
+            // Función para actualizar los datos del gráfico con AJAX
+            {% comment %} async function updateChart() {
+                const response = await fetch('/api/get-shift-data/');
+                const data = await response.json();
+
+                reportChart.data.labels = data.labels;
+                reportChart.data.datasets[0].data = data.dataset;
+                reportChart.update();
+            }
+
+            // Llama a updateChart cada 30 segundos
+            setInterval(updateChart, 30000); {% endcomment %} // 30 segundos
+        </script>
+    </body>
+</html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Empleados</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Barra de Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Sistema de Empleados</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#" id="employeeTab">Empleados</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" id="shiftTab">Turnos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" id="leaveTab">Ausencias</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" id="reportTab">Reportes</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <!-- Sección de Gestión de Empleados -->
+        <div id="employeeSection">
+            <h2>Gestión de Empleados</h2>
+            <button id="showAddEmployeeForm" class="btn btn-primary mb-3">Añadir Empleado</button>
+        
+            <!-- Formulario para Añadir Empleado (Inicialmente Oculto) -->
+            <div id="addEmployeeForm" class="card mb-3" style="display: none;">
+                <div class="card-body">
+                    <form id="employeeForm">
+                        <div class="mb-3">
+                            <label for="employeeName" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="employeeName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="employeeRole" class="form-label">Puesto</label>
+                            <input type="text" class="form-control" id="employeeRole" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Añadir Empleado</button>
+                        <button type="button" id="cancelAddEmployee" class="btn btn-secondary">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        
+            <!-- Tabla de Empleados -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Puesto</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="employeeTable">
+                    <!-- Las filas de empleados se añadirán dinámicamente -->
+                </tbody>
+            </table>
+        </div>        
+
+        <!-- Sección de Programación de Turnos -->
+        <div id="shiftSection" style="display: none;">
+            <h2>Programación de Turnos</h2>
+        
+            <!-- Formulario para Añadir Turno -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <form id="shiftForm">
+                        <div class="mb-3">
+                            <label for="shiftEmployee" class="form-label">Nombre del Empleado</label>
+                            <input type="text" id="shiftEmployee" class="form-control" placeholder="Introduce el nombre del empleado" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="shiftDate" class="form-label">Fecha del Turno</label>
+                            <input type="date" id="shiftDate" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="shiftStart" class="form-label">Hora de Inicio</label>
+                            <input type="time" id="shiftStart" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="shiftEnd" class="form-label">Hora de Fin</label>
+                            <input type="time" id="shiftEnd" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Añadir Turno</button>
+                    </form>
+                </div>
+            </div>
+        
+            <!-- Tabla de Turnos -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Empleado</th>
+                        <th>Fecha</th>
+                        <th>Hora de Inicio</th>
+                        <th>Hora de Fin</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="shiftTable">
+                    <!-- Las filas de turnos se añadirán dinámicamente -->
+                </tbody>
+            </table>
+        </div>        
+
+        <!-- Sección de Gestión de Ausencias -->
+        <div id="leaveSection" style="display: none;">
+            <h2>Gestión de Ausencias</h2>
+        
+            <!-- Formulario para Añadir Ausencia -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <form id="leaveForm">
+                        <div class="mb-3">
+                            <label for="leaveEmployee" class="form-label">Nombre del Empleado</label>
+                            <input type="text" id="leaveEmployee" class="form-control" placeholder="Introduce el nombre del empleado" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="leaveType" class="form-label">Tipo de Ausencia</label>
+                            <select id="leaveType" class="form-select" required>
+                                <option value="Enfermedad">Enfermedad</option>
+                                <option value="Vacaciones">Vacaciones</option>
+                                <option value="Sin sueldo">Sin sueldo</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="leaveStart" class="form-label">Fecha de Inicio</label>
+                            <input type="date" id="leaveStart" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="leaveEnd" class="form-label">Fecha de Fin</label>
+                            <input type="date" id="leaveEnd" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-warning">Añadir Ausencia</button>
+                    </form>
+                </div>
+            </div>
+        
+            <!-- Tabla de Ausencias -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Empleado</th>
+                        <th>Tipo de Ausencia</th>
+                        <th>Fecha de Inicio</th>
+                        <th>Fecha de Fin</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="leaveTable">
+                    <!-- Las filas de ausencias se añadirán dinámicamente -->
+                </tbody>
+            </table>
+        </div>        
+
+        <!-- Sección de Reportes -->
+        <div id="reportSection" style="display: none;">
+            <h2>Reportes</h2>
+            <p>Analiza los datos de turnos, ausencias y actividades de los empleados.</p>
+            <canvas id="reportChart" width="400" height="200"></canvas>
+            <button id="updateChartBtn" class="btn btn-primary mt-3">Actualizar Gráfico</button>
+        </div>        
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // JavaScript for Navigation
+        const sections = {
+            employee: document.getElementById('employeeSection'),
+            shift: document.getElementById('shiftSection'),
+            leave: document.getElementById('leaveSection'),
+            report: document.getElementById('reportSection')
+        };
+
+        document.getElementById('employeeTab').addEventListener('click', () => showSection('employee'));
+        document.getElementById('shiftTab').addEventListener('click', () => showSection('shift'));
+        document.getElementById('leaveTab').addEventListener('click', () => showSection('leave'));
+        document.getElementById('reportTab').addEventListener('click', () => showSection('report'));
+
+        function showSection(section) {
+            Object.values(sections).forEach(sec => sec.style.display = 'none');
+            sections[section].style.display = 'block';
+        }
+
+        // Employee Management Logic
+        let employeeId = 1; // Initialize employee ID
+        const employeeTable = document.getElementById('employeeTable');
+        const addEmployeeForm = document.getElementById('addEmployeeForm');
+        const showAddEmployeeFormButton = document.getElementById('showAddEmployeeForm');
+        const employeeForm = document.getElementById('employeeForm');
+        const cancelAddEmployee = document.getElementById('cancelAddEmployee');
+
+        // Show Add Employee Form
+        showAddEmployeeFormButton.addEventListener('click', () => {
+            addEmployeeForm.style.display = 'block';
+        });
+
+        // Cancel Add Employee Form
+        cancelAddEmployee.addEventListener('click', () => {
+            addEmployeeForm.style.display = 'none';
+            employeeForm.reset();
+        });
+
+        // Handle Form Submission
+        employeeForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent form refresh
+
+            // Get form data
+            const name = document.getElementById('employeeName').value.trim();
+            const role = document.getElementById('employeeRole').value.trim();
+
+            if (name && role) {
+                // Add a new employee to the table
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${employeeId++}</td>
+                    <td>${name}</td>
+                    <td>${role}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm deleteEmployee">Remove</button>
+                    </td>
+                `;
+                employeeTable.appendChild(row);
+
+                // Attach event listener for remove button
+                row.querySelector('.deleteEmployee').addEventListener('click', () => {
+                    row.remove(); // Remove employee row
+                });
+
+                // Reset and hide form
+                employeeForm.reset();
+                addEmployeeForm.style.display = 'none';
+            } else {
+                alert("Please fill in all fields.");
+            }
+        });
+
+        // Shift Scheduling Logic
+        const shiftForm = document.getElementById('shiftForm');
+        const shiftTable = document.getElementById('shiftTable');
+
+        // Handle Shift Form Submission
+        shiftForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent page refresh
+
+            // Get form data
+            const employee = document.getElementById('shiftEmployee').value.trim();
+            const date = document.getElementById('shiftDate').value;
+            const startTime = document.getElementById('shiftStart').value;
+            const endTime = document.getElementById('shiftEnd').value;
+
+            if (employee && date && startTime && endTime) {
+                // Add a new shift to the table
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${employee}</td>
+                    <td>${date}</td>
+                    <td>${startTime}</td>
+                    <td>${endTime}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm deleteShift">Remove</button>
+                    </td>
+                `;
+                shiftTable.appendChild(row);
+
+                // Attach event listener for the Remove button
+                row.querySelector('.deleteShift').addEventListener('click', () => {
+                    row.remove(); // Remove the shift row
+                });
+
+                // Reset the form
+                shiftForm.reset();
+            } else {
+                alert("Please fill in all fields.");
+            }
+        });
+
+        // Leave Management Logic
+        const leaveForm = document.getElementById('leaveForm');
+        const leaveTable = document.getElementById('leaveTable');
+
+        // Handle Leave Form Submission
+        leaveForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent page refresh
+
+            // Get form data
+            const employee = document.getElementById('leaveEmployee').value.trim();
+            const leaveType = document.getElementById('leaveType').value;
+            const startDate = document.getElementById('leaveStart').value;
+            const endDate = document.getElementById('leaveEnd').value;
+
+            if (employee && leaveType && startDate && endDate) {
+                // Add a new leave request to the table
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${employee}</td>
+                    <td>${leaveType}</td>
+                    <td>${startDate}</td>
+                    <td>${endDate}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm deleteLeave">Remove</button>
+                    </td>
+                `;
+                leaveTable.appendChild(row);
+
+                // Attach event listener for Remove button
+                row.querySelector('.deleteLeave').addEventListener('click', () => {
+                    row.remove(); // Remove the leave row
+                });
+
+                // Reset the form
+                leaveForm.reset();
+            } else {
+                alert("Please fill in all fields.");
+            }
+        });
+
+        // Reporting Logic
+        const ctx = document.getElementById('reportChart').getContext('2d');
+        let reportChart;
+
+        // Initialize Chart.js Bar Chart
+        function initializeChart() {
+            reportChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [], // Placeholder for employee names
+                    datasets: [
+                        {
+                            label: 'Number of Leaves',
+                            data: [], // Placeholder for leave counts
+                            backgroundColor: '#f39c12',
+                        },
+                        {
+                            label: 'Number of Shifts',
+                            data: [], // Placeholder for shift counts
+                            backgroundColor: '#3498db',
+                        },
+                    ],
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: { enabled: true },
+                    },
+                    scales: {
+                        x: { title: { display: true, text: 'Employees' } },
+                        y: { title: { display: true, text: 'Count' }, beginAtZero: true },
+                    },
+                },
+            });
+        }
+
+        // Update Chart Data
+        function updateChart() {
+            const employeeNames = new Set();
+            const leaveCounts = {};
+            const shiftCounts = {};
+        
+            // Collect data from Leave Table
+            Array.from(document.querySelectorAll('#leaveTable tr')).forEach(row => {
+                const employee = row.cells[0]?.textContent.trim();
+                if (employee) {
+                    console.log(`Leave Entry Found: ${employee}`); // Log collected data
+                    employeeNames.add(employee);
+                    leaveCounts[employee] = (leaveCounts[employee] || 0) + 1;
+                }
+            });
+        
+            // Collect data from Shift Table
+            Array.from(document.querySelectorAll('#shiftTable tr')).forEach(row => {
+                const employee = row.cells[0]?.textContent.trim();
+                if (employee) {
+                    console.log(`Shift Entry Found: ${employee}`); // Log collected data
+                    employeeNames.add(employee);
+                    shiftCounts[employee] = (shiftCounts[employee] || 0) + 1;
+                }
+            });
+        
+            // Populate chart data
+            const namesArray = Array.from(employeeNames);
+            console.log(`Employees: ${namesArray}`);
+            console.log(`Leave Counts:`, leaveCounts);
+            console.log(`Shift Counts:`, shiftCounts);
+        
+            reportChart.data.labels = namesArray;
+            reportChart.data.datasets[0].data = namesArray.map(name => leaveCounts[name] || 0); // Leaves
+            reportChart.data.datasets[1].data = namesArray.map(name => shiftCounts[name] || 0); // Shifts
+        
+            // Update the chart
+            reportChart.update();        
+        }
+
+        // Event Listener for Chart Update
+        document.getElementById('updateChartBtn').addEventListener('click', updateChart);
+
+        // Initialize the Chart
+        initializeChart();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeChart();
+            document.getElementById('updateChartBtn').addEventListener('click', updateChart);
+        });        
+
+    </script>
+</body>
+</html>

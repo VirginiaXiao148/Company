@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lista de Empleados</title>
+        <style>
+            body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            }
+            header {
+                background-color: #007bff;
+                color: #fff;
+                padding: 15px;
+                text-align: center;
+            }
+            h1 {
+                margin: 0;
+            }
+            .container {
+                width: 90%;
+                max-width: 1000px;
+                margin: 20px auto;
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+            }
+            ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            }
+            li {
+                padding: 15px;
+                border-bottom: 1px solid #ddd;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            li:last-child {
+                border-bottom: none;
+            }
+            .employee-id {
+                font-weight: bold;
+                color: #333;
+            }
+            .employee-name {
+                font-weight: bold;
+                color: #333;
+            }
+            .employee-role {
+                font-style: italic;
+                color: #666;
+            }
+            .add-button {
+                margin: 20px auto;
+                display: block;
+                width: fit-content;
+                text-align: center;
+                margin-top: 20px;
+                padding: 15px;
+                background-color: #007bff;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+                font-size: 16px;
+            }
+            .add-button:hover {
+                background-color: #0056b3;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>Lista de Empleados</h1>
+        </header>
+        <div class="container">
+            <ul>
+                {% for employee in employees %}
+                <li>
+                    <span class="employee-id">{{ employee.id }}</span>
+                    <span class="employee-name">{{ employee.name }}</span>
+                    <span class="employee-role">{{ employee.role }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'add_employee' %}" class="add-button">Agregar Empleado</a>
+        </div>
+    </body>
+</html>
