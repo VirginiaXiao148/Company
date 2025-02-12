@@ -55,6 +55,7 @@ def add_leave(request):
 
 def leave_list(request):
     leaves = Leave.objects.all()
+    leaves = sorted(leaves, key=lambda x: x.date)
     return render(request, 'management/leave_list.html', {'leaves': leaves})
 
 
