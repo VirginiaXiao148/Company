@@ -23,6 +23,7 @@ urlpatterns = [
     path('management/employees/add/', views.add_employee, name='add_employee'),
     path('management/employees/list/', views.employee_list, name='employee_list'),
     path('management/shifts/add/', views.add_shift, name='add_shift'),
+    path('management/shifts/guardar-turnos/', views.guardar_turnos_noviembre_diciembre, name='guardar_turnos'),
     path('management/shifts/list/', views.shift_list, name='shift_list'),
     path('management/leaves/add/', views.add_leave, name='add_leave'),
     path('management/leaves/list/', views.leave_list, name='leave_list'),

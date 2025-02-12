@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from django.shortcuts import render,redirect
 from django.contrib.auth import logout as do_logout
 from django.contrib.auth import authenticate
@@ -84,7 +85,60 @@ def get_shift_data(request):
 
 
 
+# Define las vacaciones
+VACACIONES = [
+    datetime(2025, 1, 1), # Día de la Independencia
+    datetime(2025, 1, 6), # Día de Reyes
+    datetime(2025, 4, 17), # Jueves Santo
+    datetime(2025, 4, 18), # Viernes Santo
+    datetime(2025, 5, 1), # Fiesta del Trabajo
+    datetime(2025, 5, 2), # Fiesta de la Comunidad de Madrid
+    datetime(2025, 7, 25), # dia del apostol Santiago
+    datetime(2025, 8, 15), # Asunción de la Virgen
+    datetime(2025, 9, 15), # Cristo de la misericordia
+    datetime(2025, 11, 1), # Día de todos los santos
+    # datetime(2025, 11, 9), # Día de la Almudena
+    datetime(2025, 12, 6), # Día de la Constitución
+    datetime(2025, 12, 8), # Día de la Inmaculada Concepción
+    datetime(2025, 12, 25), # Navidad
+    datetime(2025, 12, 26), # Fiesta Local Fuenlabrada
+]
 
+# Función para obtener todas las fechas entre dos fechas excluyendo fines de semana y vacaciones
+def obtener_fechas_excluyendo_fines_de_semana_y_vacaciones(inicio, fin):
+    fechas = []
+    delta = timedelta(days=1)
+    while inicio <= fin:
+        if inicio.weekday() < 5 and inicio not in VACACIONES:  # 0-4 son lunes-viernes
+            fechas.append(inicio)
+        inicio += delta
+    return fechas
+
+def guardar_turnos_noviembre_diciembre(request):
+    if request.method == 'POST':
+        # Obtener el empleado
+        employee = Employee.objects.get(id=request.POST['employee_id'])
+        
+        # Definir el rango de fechas
+        inicio = datetime(2025, 1, 24)
+        fin = datetime(2025, 2, 12)
+        
+        # Obtener las fechas excluyendo fines de semana y vacaciones
+        fechas = obtener_fechas_excluyendo_fines_de_semana_y_vacaciones(inicio, fin)
+        
+        # Crear turnos para cada fecha
+        for fecha in fechas:
+            Shift.objects.create(
+                employee=employee,
+                date=fecha,
+                start_time=datetime.strptime('08:00', '%H:%M').time(),
+                end_time=datetime.strptime('17:30', '%H:%M').time()
+            )
+        
+        return redirect('shift_list')
+    
+    employees = Employee.objects.all()
+    return render(request, 'management/guardar_turnos.html', {'employees': employees})
 
 
 
