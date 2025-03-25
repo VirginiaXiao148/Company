@@ -120,8 +120,8 @@ def guardar_turnos_noviembre_diciembre(request):
         employee = Employee.objects.get(id=request.POST['employee_id'])
         
         # Definir el rango de fechas
-        inicio = datetime(2025, 1, 24)
-        fin = datetime(2025, 2, 12)
+        inicio = datetime(2025, 3, 8)
+        fin = datetime(2025, 3, 25)
         
         # Obtener las fechas excluyendo fines de semana y vacaciones
         fechas = obtener_fechas_excluyendo_fines_de_semana_y_vacaciones(inicio, fin)
